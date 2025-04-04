@@ -45,7 +45,7 @@ A TuningSearch free google search server implemented based on Model Context Prot
         "--rm",
         "-e",
         "TUNINGSEARCH_API_KEY",
-        "tuningsearch/mcp-server"
+        "tuningsearch/tuningsearch-mcp-server:latest"
       ],
       "env": {
         "TUNINGSEARCH_API_KEY": "YOUR_API_KEY"
