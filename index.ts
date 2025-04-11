@@ -69,8 +69,7 @@ export interface SearchResult {
     results: Array<{
         title: string;
         url: string;
-        summary: string;
-        score: number;
+        content: string;
     }>;
     suggestions?: any[];
 }
@@ -82,7 +81,7 @@ export async function search(
         language?: string;
         page?: number;
         safe?: 0 | 1 | 2;
-        time_range?: 'day' | 'month' | 'year'
+        time_range?: 'day' | 'week' | 'month' | 'year'
     }
 ): Promise<SearchResult> {
 
@@ -138,7 +137,7 @@ export async function getQuota(
 // Create MCP server
 const server = new McpServer({
   name: "tuningsearch-mcp-server",
-  version: "0.1.2",
+  version: "0.1.4",
   description: "MCP server for Free Google Search API service"
 }, {
   capabilities: {
@@ -157,7 +156,7 @@ server.tool(
       .describe(`Search language (supported: ${SUPPORTED_LANGUAGES.map(lang => `'${lang}' (${LANGUAGE_LABELS[lang]})`).join(', ')})`),
     page: z.number().optional().describe("Result page number"),
     safe: z.union([z.literal(0), z.literal(1), z.literal(2)]).optional().describe("Safe search level: 0=Off, 1=Moderate, 2=Strict"),
-    time_range: z.enum(["day", "month", "year"]).optional().describe("Search time range")
+    time_range: z.enum(["day", "week", "month", "year"]).optional().describe("Search time range")
   },
   async ({ query, language, page, safe, time_range }) => {
     // Get API key
@@ -189,7 +188,7 @@ server.tool(
 
       // Format results into more readable text
       const formattedResults = result.results.map(item => 
-        `Title: ${item.title}\nSummary: ${item.summary}\nLink: ${item.url}\nScore: ${item.score}`
+        `Title: ${item.title}\nContent: ${item.content}\nLink: ${item.url}`
       ).join('\n\n');
 
       return {
@@ -297,7 +296,7 @@ Usage:
    - query: Search query keywords
    - language: Search language, should match the user's language
    - safe: (optional) Safe search level, 0=Off, 1=Moderate, 2=Strict
-   - time_range: (optional) Time range, values can be 'day', 'month', 'year'
+   - time_range: (optional) Time range, values can be 'day', 'week', 'month', 'year'
 5. Analyze search results
 6. Answer user questions based on search results, cite relevant information sources, and respond in the user's language
 

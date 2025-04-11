@@ -17,7 +17,7 @@ A TuningSearch free google search server implemented based on Model Context Prot
     * `language` (optional): Search language, e.g., 'zh-CN' or 'en-US'
     * `page` (optional): Result page number
     * `safe` (optional): Safety search level, 0=off, 1=moderate, 2=strict
-    * `time_range` (optional): Search time range, values can be 'day', 'month', 'year'
+    * `time_range` (optional): Search time range, values can be 'day', 'week', 'month', 'year'
 
 * **quota**
   * Check current TuningSearch API quota usage and limits
